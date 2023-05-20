@@ -28,7 +28,7 @@ class LocalNotificationsPlugin {
 
   Future<bool?> initialize({
     required NotificationsInitializationSettings settings,
-    DidReceiveNotificationResponseCallback? onDidReceiveNotificationResponse,
+    Function(Map<String, dynamic> payload)? onTapped,
   }) async {
     if (Platform.isAndroid) {
       await createAndroidChannels(settings.androidChannels);
@@ -38,7 +38,11 @@ class LocalNotificationsPlugin {
         android: AndroidInitializationSettings(settings.androidDefaultIcon),
         iOS: const DarwinInitializationSettings(),
       ),
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+      onDidReceiveNotificationResponse: (details) {
+        if (details.payload != null) {
+          onTapped?.call(jsonDecode(details.payload!));
+        }
+      },
     );
   }
 
