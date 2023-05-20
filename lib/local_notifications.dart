@@ -26,8 +26,10 @@ class LocalNotificationsPlugin {
   FlutterLocalNotificationsPlugin get _plugin =>
       FlutterLocalNotificationsPlugin();
 
-  Future<bool?> initialize(
-      {required NotificationsInitializationSettings settings}) async {
+  Future<bool?> initialize({
+    required NotificationsInitializationSettings settings,
+    DidReceiveNotificationResponseCallback? onDidReceiveNotificationResponse,
+  }) async {
     if (Platform.isAndroid) {
       await createAndroidChannels(settings.androidChannels);
     }
@@ -36,6 +38,7 @@ class LocalNotificationsPlugin {
         android: AndroidInitializationSettings(settings.androidDefaultIcon),
         iOS: const DarwinInitializationSettings(),
       ),
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
     );
   }
 
