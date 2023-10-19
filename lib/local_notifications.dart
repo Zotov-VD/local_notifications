@@ -73,11 +73,16 @@ class LocalNotificationsPlugin {
       }
       channel ??= _androidChannels.first;
 
-      androidDetails = AndroidNotificationDetails(
-        channel.id,
-        channel.name,
-        importance: Importance(channel.importance.value),
-      );
+      androidDetails = AndroidNotificationDetails(channel.id, channel.name,
+          importance: switch (channel.importance) {
+            AndroidImportance.defaultImportance => Importance.defaultImportance,
+            AndroidImportance.max => Importance.max,
+            AndroidImportance.high => Importance.high,
+            AndroidImportance.low => Importance.low,
+            AndroidImportance.min => Importance.min,
+            AndroidImportance.none => Importance.none,
+            AndroidImportance.unspecified => Importance.unspecified,
+          });
     } else if (Platform.isIOS) {
       appleDetails = const DarwinNotificationDetails();
     }
