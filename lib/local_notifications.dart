@@ -46,6 +46,14 @@ class LocalNotificationsPlugin {
     );
   }
 
+  Future<bool?> requestAndroidNotification() {
+    final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    return flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestNotificationsPermission();
+  }
+
   List<AndroidNotificationChannel> _androidChannels = [];
 
   Future<void> createAndroidChannels(
