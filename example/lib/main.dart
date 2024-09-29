@@ -67,6 +67,7 @@ class _BodyState extends State<_Body> {
           ElevatedButton(
             onPressed: () {
               const notification = LocalNotification(
+                  id: 1,
                   title: 'Привет',
                   body: 'Как дела?',
                   androidChannelId: 'important');
@@ -78,6 +79,7 @@ class _BodyState extends State<_Body> {
           ElevatedButton(
             onPressed: () {
               const notification = LocalNotification(
+                  id: 2,
                   title: 'Привет2',
                   body: 'Как дела?',
                   androidChannelId: 'important');
