@@ -54,6 +54,20 @@ class LocalNotificationsPlugin {
         .requestNotificationsPermission();
   }
 
+  Future<bool?> requestPermission() {
+    if (Platform.isIOS) {
+      return _plugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()!
+          .requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    }
+    return requestAndroidNotification();
+  }
+
   List<AndroidNotificationChannel> _androidChannels = [];
 
   Future<void> createAndroidChannels(
